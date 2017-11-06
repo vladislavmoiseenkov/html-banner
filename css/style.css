@@ -1,0 +1,14 @@
+input#flying {
+    -webkit-appearance: slider-vertical;
+    writing-mode: bt-lr;
+
+    transform: rotateX(180deg);
+}
+
+canvas {
+    border: 1px solid #000;
+}
+
+.wrapper {
+    float: left;
+}
