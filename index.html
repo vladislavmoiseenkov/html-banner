@@ -8,14 +8,33 @@
 <body>
     <div class="app">
         <div class="wrapper">
-            <canvas id="ads" width="1000px" height="250px">
+            <a href="" target="_blank">
+                <canvas id="ads" width="1000px" height="250px">
 
-            </canvas>
+                </canvas>
+            </a>
         </div>
-        <div class="control">
+        <div class="control ">
             <form onsubmit="return false" >
                 <input name="flevel" id="flying" type="range" min="0" max="1000" value="0" step="1">
             </form>
+        </div>
+        <div class="video-block" id="video-block">
+            <div class="helper">
+                <iframe width="359" height="201" src="https://www.youtube.com/embed/9xKR8Vcjias" frameborder="0" allowfullscreen></iframe>
+                <img src="images/top.png" class="top" alt="">
+                <img src="images/bottom.png" class="bottom" alt="">
+            </div>
+        </div>
+        <div id="micro-chip">
+            <img src="images/internals.png" alt="">
+        </div>
+        <div id="flash">
+            <img src="images/flash.png" alt="">
+        </div>
+        <div id="card-frame">
+            <img src="images/card_frame.png" class="cardFrame" alt="">
+            <img src="images/card_highlight.png" class="cardHighlight" id="flash-move" alt="">
         </div>
     </div>
 

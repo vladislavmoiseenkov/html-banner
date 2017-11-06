@@ -1,7 +1,16 @@
 var range = document.getElementById('flying'),
     rangeValue = rangePosition = +range.value,
     imgId = 0,
-    newImgId;
+    newImgId,
+    videoBlock = document.getElementById('video-block'),
+    microChip = document.getElementById('micro-chip'),
+    flash = document.getElementById('flash'),
+    cardFrame = document.getElementById('card-frame'),
+    flashHighlightMove = document.getElementById('flash-move'),
+    count = 0;
+
+
+var flashIntervalId, moveFlashHighlightId;
 
 if ( imgId < 10 ) {
     newImgId = '0' + imgId;
@@ -45,6 +54,37 @@ function drawPhoneImage(id) {
     phoneImage.src = './images/phone/phone_000' + id + '.png';
 }
 
+function getFlash() {
+    var i = 1;
+
+    flash.style.display = 'block';
+
+    flashIntervalId = setInterval(function () {
+        flash.style.transform = 'matrix(' + i +', 0, 0,' + i + ', 0, 0)';
+        i++;
+        if(i === 9) {
+            clearInterval(flashIntervalId);
+            flashIntervalId = null;
+            flash.style.display = 'none';
+        }
+    }, 35);
+}
+
+function moveFlashHighlights() {
+    var startPosition = -35;
+
+    moveFlashHighlightId = setInterval(function () {
+        flashHighlightMove.style.transform = 'matrix(1,3,1,1,' + startPosition +', -11)';
+        startPosition++;
+
+        if(startPosition > 65) {
+            clearInterval(moveFlashHighlightId);
+            moveFlashHighlightId = null;
+        }
+    }, 5);
+
+}
+
 function drawTezis(id) {
     if(id === 1) {
         tezis.src = './images/T_Text'+ id + '.png';
@@ -86,6 +126,33 @@ drawTezis(1);
 range.addEventListener('input', function () {
     rangeValue = +range.value;
     imgId = Math.floor(rangeValue / 17);
+
+    if (imgId > 0) {
+        videoBlock.style.display = 'none';
+
+    } else {
+        videoBlock.style.display = 'block';
+    }
+
+    if (imgId === 58) {
+        microChip.style.display = 'block';
+        cardFrame.style.display = 'block';
+        if (!moveFlashHighlightId) {
+            moveFlashHighlights();
+        }
+
+    } else {
+        microChip.style.display = 'none';
+        cardFrame.style.display = 'none';
+        clearInterval(moveFlashHighlightId);
+        moveFlashHighlightId = null;
+    }
+
+    if(imgId === 29) {
+        if (!flashIntervalId) {
+            getFlash();
+        }
+    }
 
     if(rangeValue < 55) {
         drawTezis(1);

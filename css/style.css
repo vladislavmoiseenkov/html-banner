@@ -1,14 +1,157 @@
-input#flying {
-    -webkit-appearance: slider-vertical;
-    writing-mode: bt-lr;
-
-    transform: rotateX(180deg);
-}
-
 canvas {
     border: 1px solid #000;
 }
 
-.wrapper {
-    float: left;
+.app {
+    position: relative;
+}
+
+.wrapper a {
+    display: table;
+}
+
+.video-block {
+    display: block;
+}
+
+#micro-chip {
+    display: none;
+}
+
+.video-block, #micro-chip {
+    left: 331px;
+    position: absolute;
+    top: 22px;
+}
+
+.video-block .helper {
+    overflow: hidden;
+    position: relative;
+}
+
+.video-block .helper img {
+    position: absolute;
+}
+
+.video-block .helper img.top {
+    top: -5px;
+}
+
+.video-block .helper img.bottom {
+    bottom: 6px;
+}
+
+#card-frame {
+    display: none;
+
+    overflow: hidden;
+
+    left: 330px;
+    position: absolute;
+    top: 150px;
+
+    width: 59px;
+    height: 48px;
+}
+
+#card-frame img {
+    position: absolute;
+}
+
+.cardFrame {
+    z-index: 2;
+}
+
+.cardHighlight {
+    z-index: 1;
+
+    width: 30px;
+    transform: matrix(1,3,1,1,-35,-11);
+}
+
+/**/
+
+#flash {
+    display: none;
+    position: absolute;
+    top: 30px;
+    left: 300px;
+    width: 100px;
+}
+
+#flash img {
+    width: 100px;
+}
+
+/*css range*/
+
+.control {
+    position: absolute;
+    top: 115px;
+    left: 700px;
+    transform: rotate(90deg);
+}
+
+input[type="range"] {
+    /*cursor: move;*/
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    width: 180px;
+    height: 0px;
+    margin: 0;
+    border: none;
+    padding: 1px 0px;
+    border-radius: 0px;
+    box-shadow: inset 0 1px 0 0 #ccc, inset 0 -1px 0 0 #ccc;
+    -webkit-box-shadow: inset 0 1px 0 0 #ccc, inset 0 -1px 0 0 #ccc;
+    outline: none;
+}
+
+input[type="range"]::-moz-range-track {
+    border: inherit;
+    background: transparent;
+}
+
+input[type="range"]::-ms-track {
+    border: inherit;
+    color: transparent; /* don't drawn vertical reference line */
+    background: transparent;
+}
+
+input[type="range"]::-ms-fill-lower,
+input[type="range"]::-ms-fill-upper {
+    background: transparent;
+}
+
+input[type="range"]::-ms-tooltip {
+    display: none;
+}
+
+/* thumb */
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: none;
+    border-radius: 50%;
+    background: #000;
+    cursor: move;
+}
+input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border: none;
+    border-radius: 50%;
+    background: #000;
+    cursor: move;
+}
+
+input[type="range"]::-ms-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 0;
+    background: #000;
+    cursor: move;
 }
