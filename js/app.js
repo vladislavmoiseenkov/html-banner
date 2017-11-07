@@ -34,24 +34,36 @@ if ( imgId < 10 ) {
 function generateRain() {
     var x = randomNumb(PHONE_WIDTH_MIN, PHONE_WIDTH_MAX),
         y = randomNumb(PHONE_HEIGHT_MIN, PHONE_HEIGHT_MAX),
-        dropId = randomNumb(1, 4);
+        dropId = randomNumb(1, 4),
+        width = 3, height = 3;
 
     var drop = document.createElement('img');
     drop.setAttribute('src', './images/raindrop_' + dropId + '.png');
     drop.className = 'drop';
     drop.style.position = 'absolute';
     drop.style.zIndex = 12;
-    drop.style.transform = 'matrix(1, 0, 0, 1,'+ x +',' + y +')';
+    drop.style.transform = 'matrix(' + width + ', 0, 0,' +  height + ','+ x +',' + y +')';
     app.insertBefore(drop, wrapper);
-    var dropIntervalId = setInterval(function () {
-        drop.style.transform = 'matrix(1, 0, 0, 1,'+ x +',' + y +')';
-        y++;
-        if(y > 270) {
-            clearInterval(dropIntervalId);
-            drop.style.display = 'none';
-            app.removeChild(drop);
+    var resizeIntervalId = setInterval(function () {
+        if(width > 1 && height > 1) {
+            width -= 1;
+            height -= 1;
+            drop.style.transform = 'matrix(' + width + ', 0, 0,' +  height + ','+ x +',' + y +')';
+        } else {
+            clearInterval(resizeIntervalId);
+            resizeIntervalId = null;
+
+            var dropIntervalId = setInterval(function () {
+                drop.style.transform = 'matrix(1, 0, 0, 1,'+ x +',' + y +')';
+                y++;
+                if(y > 270) {
+                    clearInterval(dropIntervalId);
+                    drop.style.display = 'none';
+                    app.removeChild(drop);
+                }
+            },10);
         }
-    },10);
+    }, 50);
 }
 
 function randomNumb(min, max) {
