@@ -8,13 +8,13 @@ var range = document.getElementById('flying'),
     microChip = document.getElementById('micro-chip'),
     flash = document.getElementById('flash'),
     cardFrame = document.getElementById('card-frame'),
-    flashHighlightMove = document.getElementById('flash-move'),
-    count = 0;
+    flashHighlightMove = document.getElementById('flash-move');
 
-var flashIntervalId, moveFlashHighlightId;
+var flashIntervalId, moveFlashHighlightId, rainIntervalId;
 
 var canvas = document.getElementById('ads'),
     ctx = canvas.getContext('2d');
+
 var phoneImage = new Image(),
     phoneCompanyImage = new Image(),
     phoneModel = new Image(),
@@ -22,13 +22,18 @@ var phoneImage = new Image(),
     buyBTN = new Image(),
     dragInfo = new Image();
 
+var PHONE_WIDTH_MIN = 315;
+var PHONE_WIDTH_MAX = 675;
+var PHONE_HEIGHT_MIN = 0;
+var PHONE_HEIGHT_MAX = 75;
+
 if ( imgId < 10 ) {
     newImgId = '0' + imgId;
 }
 
 function generateRain() {
-    var x = randomNumb(315, 375),
-        y = randomNumb(0, 75),
+    var x = randomNumb(PHONE_WIDTH_MIN, PHONE_WIDTH_MAX),
+        y = randomNumb(PHONE_HEIGHT_MIN, PHONE_HEIGHT_MAX),
         dropId = randomNumb(1, 4);
 
     var drop = document.createElement('img');
@@ -36,17 +41,15 @@ function generateRain() {
     drop.className = 'drop';
     drop.style.position = 'absolute';
     drop.style.zIndex = 12;
-    // drop.style.left = x + 'px';
-    // drop.style.top = y + 'px';
     drop.style.transform = 'matrix(1, 0, 0, 1,'+ x +',' + y +')';
     app.insertBefore(drop, wrapper);
-    drop = document.getElementsByClassName('drop')[0];
     var dropIntervalId = setInterval(function () {
         drop.style.transform = 'matrix(1, 0, 0, 1,'+ x +',' + y +')';
         y++;
         if(y > 270) {
             clearInterval(dropIntervalId);
             drop.style.display = 'none';
+            app.removeChild(drop);
         }
     },10);
 }
@@ -162,7 +165,6 @@ function drawTezis(id) {
 };
 
 drawContent();
-// generateRain();
 
 range.addEventListener('input', function () {
     rangeValue = +range.value;
@@ -199,6 +201,13 @@ range.addEventListener('input', function () {
         drawTezis(1);
     } else if(rangeValue > 55 && rangeValue < 355) {
         drawTezis(2);
+        if(!rainIntervalId) {
+            rainIntervalId = setInterval(generateRain(), 100);
+        } else {
+            clearInterval(rainIntervalId);
+            rainIntervalId = null;
+        }
+
     } else if(rangeValue > 355 && rangeValue < 825) {
         drawTezis(3);
     } else if(rangeValue> 825) {
