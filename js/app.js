@@ -2,6 +2,8 @@ var range = document.getElementById('flying'),
     rangeValue = rangePosition = +range.value,
     imgId = 0,
     newImgId,
+    app = document.getElementById('app'),
+    wrapper = document.getElementsByClassName('wrapper')[0],
     videoBlock = document.getElementById('video-block'),
     microChip = document.getElementById('micro-chip'),
     flash = document.getElementById('flash'),
@@ -9,12 +11,7 @@ var range = document.getElementById('flying'),
     flashHighlightMove = document.getElementById('flash-move'),
     count = 0;
 
-
 var flashIntervalId, moveFlashHighlightId;
-
-if ( imgId < 10 ) {
-    newImgId = '0' + imgId;
-}
 
 var canvas = document.getElementById('ads'),
     ctx = canvas.getContext('2d');
@@ -25,26 +22,66 @@ var phoneImage = new Image(),
     buyBTN = new Image(),
     dragInfo = new Image();
 
-buyBTN.src = './images/T_CTA.png';
-buyBTN.onload = function() {
-    ctx.drawImage(buyBTN, 875, 180, 100, 35);
-};
+if ( imgId < 10 ) {
+    newImgId = '0' + imgId;
+}
 
-dragInfo.src = './images/T_SliderText.png';
-dragInfo.onload = function () {
-    ctx.drawImage(dragInfo, 0, 0, 80, 19, 800, 20, 55, 13);
-    ctx.drawImage(dragInfo, 0, 19, 100, 20, 850, 20, 70, 13);
-};
+function generateRain() {
+    var x = randomNumb(315, 375),
+        y = randomNumb(0, 75),
+        dropId = randomNumb(1, 4);
 
-phoneCompanyImage.onload = function () {
-    ctx.drawImage(phoneCompanyImage, 10, 10, 100, 20);
-};
-phoneCompanyImage.src = './images/T_SamsungLogo.png';
+    var drop = document.createElement('img');
+    drop.setAttribute('src', './images/raindrop_' + dropId + '.png');
+    drop.className = 'drop';
+    drop.style.position = 'absolute';
+    drop.style.zIndex = 12;
+    // drop.style.left = x + 'px';
+    // drop.style.top = y + 'px';
+    drop.style.transform = 'matrix(1, 0, 0, 1,'+ x +',' + y +')';
+    app.insertBefore(drop, wrapper);
+    drop = document.getElementsByClassName('drop')[0];
+    var dropIntervalId = setInterval(function () {
+        drop.style.transform = 'matrix(1, 0, 0, 1,'+ x +',' + y +')';
+        y++;
+        if(y > 270) {
+            clearInterval(dropIntervalId);
+            drop.style.display = 'none';
+        }
+    },10);
+}
 
-phoneModel.onload = function () {
-    ctx.drawImage(phoneModel, 10, 35);
-};
-phoneModel.src = './images/T_GalaxyLogo.png';
+function randomNumb(min, max) {
+    var rand = min - 0.5 + Math.random() * (max - min + 1);
+    rand = Math.round(rand);
+    return rand;
+}
+
+function drawContent() {
+    buyBTN.src = './images/T_CTA.png';
+    buyBTN.onload = function() {
+        ctx.drawImage(buyBTN, 875, 180, 100, 35);
+    };
+
+    dragInfo.src = './images/T_SliderText.png';
+    dragInfo.onload = function () {
+        ctx.drawImage(dragInfo, 0, 0, 80, 19, 800, 20, 55, 13);
+        ctx.drawImage(dragInfo, 0, 19, 100, 20, 850, 20, 70, 13);
+    };
+
+    phoneCompanyImage.onload = function () {
+        ctx.drawImage(phoneCompanyImage, 10, 10, 100, 20);
+    };
+    phoneCompanyImage.src = './images/T_SamsungLogo.png';
+
+    phoneModel.onload = function () {
+        ctx.drawImage(phoneModel, 10, 35);
+    };
+    phoneModel.src = './images/T_GalaxyLogo.png';
+
+    drawPhoneImage(newImgId);
+    drawTezis();
+}
 
 function drawPhoneImage(id) {
     phoneImage.onload = function(){
@@ -86,6 +123,10 @@ function moveFlashHighlights() {
 }
 
 function drawTezis(id) {
+    if(!arguments.length) {
+        id = 1;
+    }
+
     if(id === 1) {
         tezis.src = './images/T_Text'+ id + '.png';
         tezis.onload = function () {
@@ -118,10 +159,10 @@ function drawTezis(id) {
             ctx.drawImage(tezis, 415, 0, 220, 33, 20, 210, 190, 30);
         };
     }
-}
+};
 
-drawPhoneImage(newImgId);
-drawTezis(1);
+drawContent();
+// generateRain();
 
 range.addEventListener('input', function () {
     rangeValue = +range.value;

@@ -3,6 +3,7 @@ canvas {
 }
 
 .app {
+    overflow: hidden;
     position: relative;
 }
 
